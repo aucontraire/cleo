@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Company, Family, Guide, User
 
-# Register your models here.
+admin.site.register(Company)
+admin.site.register(Family)
+admin.site.register(Guide)
+admin.site.register(User)

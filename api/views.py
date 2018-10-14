@@ -1,6 +1,7 @@
 from api.serializers import CompanySerializer, FamilySerializer, GuideSerializer, UserSerializer
 from django.http import Http404
 from rest_framework import status
+from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from service.models import Company, Family, Guide, User
@@ -188,3 +189,25 @@ class UserDetail(APIView):
         user = self.get_object(pk)
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['PUT'])
+def activate(request, pk):
+    try:
+        user = User.objects.get(pk=pk)
+    except User.DoesNotExist:
+        raise Http404
+
+    if not request.data.get('activation_code') and not request.data.get('password'):
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    if user.activation_code != request.data.get('activation_code'):
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    if len(user.password) != 0:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    serializer = UserSerializer(user, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        user.set_password(request.data['password'])
+        user.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

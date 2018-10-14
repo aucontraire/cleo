@@ -222,5 +222,25 @@ class UserTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual('paco@gmail.com', response.data['email'])
 
+    def test_activate_user(self):
+        user = User(
+            first_name='Paco',
+            last_name='Murcia',
+            phone_number='415-694-7777',
+            email='hello@aol.com',
+            address='55 Main St.',
+            password=''
+        )
+        user.save()
+        user_id = user.id
 
-    # TODO: add activate user
+        data = {
+            'activation_code': user.activation_code,
+            'password': 'password123'
+        }
+
+        url = reverse('user-activate', kwargs={ 'pk': user_id })
+        response = self.client.put(url, data, format='json')
+        user = User.objects.get()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertNotEqual('password123', user.password)

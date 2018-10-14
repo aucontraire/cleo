@@ -12,6 +12,7 @@ urlpatterns = [
     path('guides/<pk>/', views.GuideDetail.as_view(), name='guide-detail'),
     path('users/', views.UserList.as_view(), name='user-list'),
     path('users/<pk>/', views.UserDetail.as_view(), name='user-detail'),
+    path('users/<pk>/activate', views.activate, name='user-activate'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

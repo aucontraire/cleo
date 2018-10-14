@@ -1,9 +1,55 @@
-from api.serializers import UserSerializer
+from api.serializers import GuideSerializer, UserSerializer
 from django.http import Http404
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from service.models import User
+from service.models import Guide, User
+
+
+class GuideList(APIView):
+    """
+    List all guides, or create a new guide.
+    """
+    def get(self, request, format=None):
+        guides = Guide.objects.all()
+        serializer = GuideSerializer(guides, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = GuideSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class GuideDetail(APIView):
+    """
+    Retrieve, update or delete a guide instance.
+    """
+    def get_object(self, pk):
+        try:
+            return Guide.objects.get(pk=pk)
+        except Guide.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        guide = self.get_object(pk)
+        serializer = GuideSerializer(guide)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        guide = self.get_object(pk)
+        serializer = GuideSerializer(guide, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        guide = self.get_object(pk)
+        guide.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class UserList(APIView):

@@ -1,7 +1,32 @@
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-from service.models import User
+from service.models import Guide, User
+
+
+class GuideTests(APITestCase):
+
+    def test_empty_guide_list(self):
+        url = reverse('guide-list')
+        response = self.client.get(url, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(Guide.objects.count(), len(response.data))
+
+    def test_create_guide(self):
+        url = reverse('guide-list')
+        data = {
+            'first_name': 'Stu',
+            'last_name': 'Parsons',
+            'phone_number': '415-655-7777',
+            'email': 'disco-stu@yahoo.com'
+        }
+
+        response = self.client.post(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(1, Guide.objects.count())
+        self.assertEqual('Stu Parsons', str(Guide.objects.get()))
 
 
 class UserTests(APITestCase):

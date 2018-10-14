@@ -1,7 +1,30 @@
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-from service.models import Guide, User
+from service.models import Company, Guide, User
+
+
+class CompanyTests(APITestCase):
+
+    def test_empty_company_list(self):
+        url = reverse('company-list')
+        response = self.client.get(url, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(Company.objects.count(), len(response.data))
+
+    def test_create_company(self):
+        url = reverse('company-list')
+        data = {
+            'name': 'Slack',
+            'address': '500 Howard Street'
+        }
+
+        response = self.client.post(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(1, Company.objects.count())
+        self.assertEqual('Slack', str(Company.objects.get()))
 
 
 class GuideTests(APITestCase):

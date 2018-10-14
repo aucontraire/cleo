@@ -2,6 +2,19 @@ from rest_framework import serializers
 from service.models import Company, Family, Guide, User
 
 
+class CompanySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Company
+        fields = (
+            'id',
+            'created_at',
+            'updated_at',
+            'name',
+            'address'
+        )
+
+
 class GuideSerializer(serializers.ModelSerializer):
 
     class Meta:

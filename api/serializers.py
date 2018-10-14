@@ -15,6 +15,23 @@ class CompanySerializer(serializers.ModelSerializer):
         )
 
 
+class FamilySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Family
+        fields = (
+            'id',
+            'created_at',
+            'updated_at',
+            'due_date',
+            'birth_date',
+            'baby_gender',
+            'main_address',
+            'company',
+            'guide'
+        )
+
+
 class GuideSerializer(serializers.ModelSerializer):
 
     class Meta:

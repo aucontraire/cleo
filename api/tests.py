@@ -1,7 +1,7 @@
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-from service.models import Company, Guide, User
+from service.models import Company, Family, Guide, User
 
 
 class CompanyTests(APITestCase):
@@ -25,6 +25,59 @@ class CompanyTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(1, Company.objects.count())
         self.assertEqual('Slack', str(Company.objects.get()))
+
+
+class FamilyTests(APITestCase):
+
+    def test_empty_family_list(self):
+        url = reverse('family-list')
+        response = self.client.get(url, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(Family.objects.count(), len(response.data))
+
+    def test_create_family(self):
+        url = reverse('family-list')
+        data = {
+            'baby_gender': 'female',
+            'main_address': '501 Howard Street'
+        }
+
+        response = self.client.post(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(1, Family.objects.count())
+        self.assertEqual('female', Family.objects.get().baby_gender)
+
+    def test_update_family(self):
+        guide = Guide(
+            first_name='Stu',
+            last_name='Parsons',
+            phone_number='415-655-7777',
+            email='disco-stu@yahoo.com'
+        )
+        guide.save()
+        guide_id = guide.id
+
+        family = Family(
+            baby_gender='female',
+            main_address='501 Howard Street',
+        )
+        family.save()
+        family_id = family.id
+
+        data = {
+            'main_address': '510 Howard Street',
+            'guide': guide_id
+        }
+
+        url = reverse('family-detail', kwargs={ 'pk': family_id })
+        response = self.client.put(url, data, format='json')
+        family = Family.objects.get()
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual('510 Howard Street', response.data['main_address'])
+        self.assertEqual('Stu Parsons', str(family.guide))
 
 
 class GuideTests(APITestCase):

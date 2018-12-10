@@ -244,3 +244,21 @@ class UserTests(APITestCase):
         user = User.objects.get()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertNotEqual('password123', user.password)
+
+    def test_activate_user_with_missing_data(self):
+        user = User(
+            first_name='Amparo',
+            last_name='Mondragon',
+            phone_number='415-694-5555',
+            email='amondragon@gmail.com',
+            address='55 Main St.',
+            password=''
+        )
+        user.save()
+        user_id = user.id
+
+        data = { 'activation_code': user.activation_code }
+
+        url = reverse('user-activate', kwargs={ 'pk': user_id })
+        response = self.client.put(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

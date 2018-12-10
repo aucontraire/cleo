@@ -82,7 +82,7 @@ class FamilyDetail(APIView):
 
     def get(self, request, pk, format=None):
         family = self.get_object(pk)
-        serializer = FamilySerializer(guide)
+        serializer = FamilySerializer(family)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):

@@ -197,17 +197,18 @@ def activate(request, pk):
     except User.DoesNotExist:
         raise Http404
 
-    if not request.data.get('activation_code') and not request.data.get('password'):
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    if user.activation_code != request.data.get('activation_code'):
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    if len(user.password) != 0:
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
     serializer = UserSerializer(user, data=request.data, partial=True)
     if serializer.is_valid():
+        if not request.data.get('activation_code') or not request.data.get('password'):
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if user.activation_code != request.data.get('activation_code'):
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if len(user.password) != 0:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
         serializer.save()
         user.set_password(request.data['password'])
         user.save()
         return Response(serializer.data)
+
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

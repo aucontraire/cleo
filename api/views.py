@@ -36,7 +36,7 @@ class CompanyDetail(APIView):
 
     def get(self, request, pk, format=None):
         company = self.get_object(pk)
-        serializer = CompanySerializer(guide)
+        serializer = CompanySerializer(company)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):

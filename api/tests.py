@@ -222,7 +222,7 @@ class UserTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual('paco@gmail.com', response.data['email'])
 
-    def test_activate_user(self):
+    def test_activate_user_not_previously_activated_with_valid_data(self):
         user = User(
             first_name='Paco',
             last_name='Murcia',

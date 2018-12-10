@@ -79,6 +79,12 @@
 ## Company
 - Get a list of all companies [GET]  
   - http://127.0.0.1:5000/api/v1/companies/  
+- Get a specific company [GET]  
+  - http://127.0.0.1:5000/api/v1/companies/id/  
+- Create a new company [POST]  
+  - http://127.0.0.1:5000/api/v1/companies/
+- Update a company [PUT]  
+  - http://127.0.0.1:5000/api/v1/companies/id/  
 
 ## Family
 - Get a list of all families [GET]  
@@ -93,3 +99,9 @@
 ## Guide
 - Get a list of all guides [GET]  
   - http://127.0.0.1:5000/api/v1/guides/  
+- Get a specific guide [GET]  
+  - http://127.0.0.1:5000/api/v1/guides/id/
+- Create a new guide [POST]  
+  - http://127.0.0.1:5000/api/v1/guides/
+- Update a guide [PUT]  
+  - http://127.0.0.1:5000/api/v1/guides/id/ 

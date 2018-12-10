@@ -68,6 +68,8 @@
 - Create a new user [POST]  
   - http://127.0.0.1:5000/api/v1/users/
   - User emails must be unique and return an error if user email is already in use.
+- Delete a user [DELETE]
+  - http://127.0.0.1:5000/api/v1/users/id/
 - Update a user [PUT]  
   - http://127.0.0.1:5000/api/v1/users/id/  
 - Activate a user [PUT]  
@@ -83,6 +85,8 @@
   - http://127.0.0.1:5000/api/v1/companies/id/  
 - Create a new company [POST]  
   - http://127.0.0.1:5000/api/v1/companies/
+- Delete a company [DELETE]
+  - http://127.0.0.1:5000/api/v1/companies/id/
 - Update a company [PUT]  
   - http://127.0.0.1:5000/api/v1/companies/id/  
 
@@ -93,6 +97,8 @@
   - http://127.0.0.1:5000/api/v1/families/id/
 - Create a new family [POST]  
   - http://127.0.0.1:5000/api/v1/families/
+- Delete a family [DELETE]
+  - http://127.0.0.1:5000/api/v1/families/id/
 - Update a family [PUT]  
   - http://127.0.0.1:5000/api/v1/families/id/ 
 
@@ -103,5 +109,7 @@
   - http://127.0.0.1:5000/api/v1/guides/id/
 - Create a new guide [POST]  
   - http://127.0.0.1:5000/api/v1/guides/
+- Delete a guide [DELETE]
+  - http://127.0.0.1:5000/api/v1/guides/id/
 - Update a guide [PUT]  
   - http://127.0.0.1:5000/api/v1/guides/id/ 

@@ -1,5 +1,21 @@
 # cleo
 
+
+### To run the server:
+
+```$ DB_NAME=cleo_db DB_USER=user_00 DB_PASSWORD=user_00_pwd HOST=localhost PORT=3306 SECRET_KEY='somearbitrarykey' python3 manage.py runserver 0:5000```
+
+### To run the main tests:
+
+```$ DB_NAME=cleo_db DB_USER=user_00 DB_PASSWORD=user_00_pwd HOST=localhost PORT=3306 SECRET_KEY='somearbitrarykey' python3 manage.py test service```
+
+
+### To run the API tests:
+
+```$ DB_NAME=cleo_db DB_USER=user_00 DB_PASSWORD=user_00_pwd HOST=localhost PORT=3306 SECRET_KEY='somearbitrarykey' python3 manage.py test api```
+
+
+
 ## Models
 
 - Family (references up to two users representing the parents)
@@ -42,3 +58,38 @@
   - name
   - address
   
+# API Endpoints
+
+## User
+- Get a list of all users [GET]  
+  - http://127.0.0.1:5000/api/v1/users/  
+- Get a specific user [GET]  
+  - http://127.0.0.1:5000/api/v1/users/id/  
+- Create a new user [POST]  
+  - http://127.0.0.1:5000/api/v1/users/
+  - User emails must be unique and return an error if user email is already in use.
+- Update a user [PUT]  
+  - http://127.0.0.1:5000/api/v1/users/id/  
+- Activate a user [PUT]  
+  - http://127.0.0.1:5000/api/v1/users/id/activate
+  - Takes an activation code and new password.
+  - Must check activation code before setting password.  Returns error if activation code is invalid.
+  - Returns error if user is already activated.
+
+## Company
+- Get a list of all companies [GET]  
+  - http://127.0.0.1:5000/api/v1/companies/  
+
+## Family
+- Get a list of all families [GET]  
+  - http://127.0.0.1:5000/api/v1/families/  
+- Get a specific family [GET]  
+  - http://127.0.0.1:5000/api/v1/families/id/
+- Create a new family [POST]  
+  - http://127.0.0.1:5000/api/v1/families/
+- Update a family [PUT]  
+  - http://127.0.0.1:5000/api/v1/families/id/ 
+
+## Guide
+- Get a list of all guides [GET]  
+  - http://127.0.0.1:5000/api/v1/guides/  

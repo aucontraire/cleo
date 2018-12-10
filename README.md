@@ -3,16 +3,16 @@
 
 ### To run the server:
 
-```$ DB_NAME=cleo_db DB_USER=user_00 DB_PASSWORD=user_00_pwd HOST=localhost PORT=3306 SECRET_KEY='somearbitrarykey' python3 manage.py runserver 0:5000```
+```$ DB_NAME=cleo_db DB_USER=user_00 DB_PASSWORD=user_00_pwd HOST=localhost PORT=3306 SECRET_KEY='PutYourSecretKeyHere' python3 manage.py runserver 0:5000```
 
 ### To run the main tests:
 
-```$ DB_NAME=cleo_db DB_USER=user_00 DB_PASSWORD=user_00_pwd HOST=localhost PORT=3306 SECRET_KEY='somearbitrarykey' python3 manage.py test service```
+```$ DB_NAME=cleo_db DB_USER=user_00 DB_PASSWORD=user_00_pwd HOST=localhost PORT=3306 SECRET_KEY='PutYourSecretKeyHere' python3 manage.py test service```
 
 
 ### To run the API tests:
 
-```$ DB_NAME=cleo_db DB_USER=user_00 DB_PASSWORD=user_00_pwd HOST=localhost PORT=3306 SECRET_KEY='somearbitrarykey' python3 manage.py test api```
+```$ DB_NAME=cleo_db DB_USER=user_00 DB_PASSWORD=user_00_pwd HOST=localhost PORT=3306 SECRET_KEY='PutYourSecretKeyHere' python3 manage.py test api```
 
 
 
